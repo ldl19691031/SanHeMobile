@@ -210,7 +210,7 @@ function* gambling(){
         var player_selection = yield
         switch (player_selection) {
             case 0:
-                if(Math.random()<0.4){
+                if(Math.random()>0.4){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
                         "很遗憾，你没有赢"
@@ -223,7 +223,7 @@ function* gambling(){
                 }
                 break;
             case 1:
-                if(Math.random()<0.15){
+                if(Math.random()>0.15){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
                         "很遗憾，你没有赢"
@@ -236,7 +236,7 @@ function* gambling(){
                 }
                 break;
             case 2:
-                if(Math.random()<0.05){
+                if(Math.random()>0.05){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
                         "很遗憾，你没有赢"
@@ -249,7 +249,7 @@ function* gambling(){
                 }
                 break;
             case 3:
-                if(Math.random()<0.015){
+                if(Math.random()>0.015){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
                         "很遗憾，你没有赢"

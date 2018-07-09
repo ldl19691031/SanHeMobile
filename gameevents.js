@@ -139,6 +139,7 @@ function* do_one_day_job(){
             "找点别的事情做吧"
         ]
         player_status["Selections"]=["继续"]
+        player_status["Money"]+= 30
         yield
         return
     }

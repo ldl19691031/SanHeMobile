@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>三和浮尘录</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="./weui.min.css" />
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <article class="weui-article">
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__bd">
+                    <div class="weui-progress">
+                        健康度 : {{HP}}/100
+                        <div class="weui-progress__bar">
+                            <div class="weui-progress__inner-bar js_progress" v-bind:style="{width: (HP)+'%'}"></div>
+                        </div>
+                    </div>
+                    <div class="weui-progress">
+                        债务 : {{Debt}}/50000
+                        <div class="weui-progress__bar">
+                            <div class="weui-progress__inner-bar js_progress" v-bind:style="{width: (Debt/500)+'%'}"></div>
+                        </div>
+                    </div>
+                    <div>现金: {{Money}}</div>
+                </div>
+            </div>
+            <section>
+                <p v-for="M in Message">
+                    {{ M }}
+                </p>
+            </section>
+        </article>
+        <div class="weui-footer weui-footer_fixed-bottom" style="margin: 3%">
+            <a v-for="(selection,index) in Selections" class="weui-btn weui-btn_plain-default" v-on:click="on_click_button(index)">{{ selection }}</a>
+
+        </div>
+
+    </div>
+
+
+</body>
+<script src="./gameevents.js"></script>
+<script src="./gameengine.js"></script>
+
+</html>

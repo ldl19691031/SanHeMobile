@@ -27,7 +27,7 @@
 
 <body>
     <div id="app">
-        <article class="weui-article">
+        <article class="weui-article" >
             <div class="weui-panel weui-panel_access">
                 <div class="weui-panel__bd">
                     <div class="weui-progress">
@@ -45,20 +45,29 @@
                     <div>现金: {{Money}}</div>
                 </div>
             </div>
-            <section>
-                <p v-for="M in Message">
-                    {{ M }}
-                </p>
+            <section style="margin: 5%;">
+                    <p v-for="M in Message">
+                        {{ M }}
+                    </p>
             </section>
         </article>
         <div class="weui-footer weui-footer_fixed-bottom" style="margin: 3%">
             <a v-for="(selection,index) in Selections" class="weui-btn weui-btn_plain-default" v-on:click="on_click_button(index)">{{ selection }}</a>
 
         </div>
-
+        <div id="GameOverDialog" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">游戏结束</strong></div>
+                <div class="weui-dialog__bd">{{ DialogMessage }}</div>
+                <div class="weui-dialog__ft">
+                    <a onclick="location.reload();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-
+    
 </body>
 <script src="./gameevents.js"></script>
 <script src="./gameengine.js"></script>

@@ -191,6 +191,26 @@ function* pay_or_get_debt(){
             yield
             return
         }
+    }else if(player_selection==1){
+        return
+    }else if(player_selection==2){
+        player_status["Message"] = [
+            "你还上了100的贷款"
+        ]
+        player_status["Selections"]=["继续"]
+        player_status["Money"] -= 100
+        player_status["Debt"] -= 100
+        yield
+        return
+    }else if(player_selection==3){
+        player_status["Message"] = [
+            "你还上了1000的贷款"
+        ]
+        player_status["Selections"]=["继续"]
+        player_status["Money"] -= 1000
+        player_status["Debt"] -= 1000
+        yield
+        return
     }
 }
 function* gambling(){

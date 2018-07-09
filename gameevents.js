@@ -65,13 +65,30 @@ function* walk_on_street(){
             }else if (player_selection == 1){
                 return false
             }
-        }else if (p<0.6){
+        }else if (p<0.5){
             player_status["Message"].push("你看到了一家卷帘门半开着的洗头房，你要进去修车吗？")
             player_status["Selections"]=["修车","算了"]
             var player_selection = yield
             if(player_selection==0){
                 //修车
                 yield* fix_car()
+            }else if (player_selection == 1){
+                continue
+            }
+        }else if(p<0.8){
+            player_status["Message"].push("你看到了一家面馆，里面正在卖2块钱的大水和4块钱的挂逼面")
+            player_status["Selections"]=["吃面加喝大水","算了"]
+            var player_selection = yield
+            if(player_selection==0){
+                player_status["Message"] = [
+                    "你点了一份挂逼面，呼哧呼哧地吃起来",
+                    "差点呛到，你又喝了一口大水"
+                ]
+                player_status["Selections"]=["继续"]
+                player_status["HP"] += 6
+                player_status["Money"] -= 6
+                yield
+                continue
             }else if (player_selection == 1){
                 continue
             }
@@ -133,13 +150,14 @@ function* do_one_day_job(){
                 }
             }
         }
+        var money = 150 + getRandomInt(-30,30)
         player_status["Message"] = [
             "总算是收工了，坐在大巴车上，你感觉全身都累瘫了",
             "窗外的灯光不断闪过，你意识到你已经从电子厂回到了三和",
-            "找点别的事情做吧"
+            "你下车的时候，从门口的人那儿接过了你的"+money+"块工资"
         ]
         player_status["Selections"]=["继续"]
-        player_status["Money"]+= 30
+        player_status["Money"]+= money
         yield
         return
     }

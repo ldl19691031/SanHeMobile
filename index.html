@@ -31,23 +31,23 @@
             <div class="weui-panel weui-panel_access">
                 <div class="weui-panel__bd">
                     <div class="weui-progress">
-                        健康度 : {{HP}}/100
+                        健康 : {{HP}}/100
                         <div class="weui-progress__bar">
                             <div class="weui-progress__inner-bar js_progress" v-bind:style="{width: (HP)+'%'}"></div>
                         </div>
                     </div>
                     <div class="weui-progress">
-                        债务 : {{Debt}}/50000
+                        借金 : {{Debt}}/50000
                         <div class="weui-progress__bar">
                             <div class="weui-progress__inner-bar js_progress" v-bind:style="{width: (Debt/500)+'%'}"></div>
                         </div>
                     </div>
-                    <div>现金: {{Money}}</div>
+                    <div>現金: {{Money}}</div>
                 </div>
             </div>
             <section style="margin: 5%;">
-                    <div v-if = "HeadImage != ''">
-                        <img v-bind:src="HeadImage">
+                    <div v-if = "Special != ''">
+                        <div v-html="Special"></div>
                     </div>
                     <p v-for="M in Message">
                         {{ M }}
@@ -61,10 +61,10 @@
         <div id="GameOverDialog" style="display: none;">
             <div class="weui-mask"></div>
             <div class="weui-dialog">
-                <div class="weui-dialog__hd"><strong class="weui-dialog__title">游戏结束</strong></div>
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">ゲーム終了</strong></div>
                 <div class="weui-dialog__bd">{{ DialogMessage }}</div>
                 <div class="weui-dialog__ft">
-                    <a onclick="location.reload();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                    <a onclick="location.reload();" class="weui-dialog__btn weui-dialog__btn_primary">決定する</a>
                 </div>
             </div>
         </div>

@@ -13,32 +13,31 @@ function* multi_message(messages){
     for(var i =0; i < messages.length; i++)
     {
         player_status["Message"] = [messages[i]]
-        player_status["Selections"] = ["继续"]
+        player_status["Selections"] = ["続ける"]
         player_selection = yield
     }
 }
 function* fix_car(){
     p = Math.random()
+    player_status["Special"] = '<img src="statics/fixcar.jpg">';
     player_status["Money"] -= 150
     if (p < 0.1){
         player_status["Message"] = [
-            "当你刚刚搂着怀里的失足少女躺下，随即门外传来了一阵脚步声",
-            "一段急促的敲门声响了起来。“开门！警察，查房！”",
-            "过了一会儿，你就双手抱头，蹲在了地上。",
-            "交出了300块钱罚款之后，你终于被放了出来"
+            "ちょうど横になっているときに女の子が横になっていると、ドアの外側に足跡があります。",
+            "ドアをすばやくたたくと鳴った。 「ドアを開けなさい！警察、切り上げる！」",
+            "しばらくして、あなたは両手で頭を抱えて地面にしゃがみました。",
+            "300ドルの罰金を渡した後、あなたはついに解放されます。"
         ]
         player_status["Money"] -= 300
         return
     }else{
         var messages=[
-            "你静静地望着她，希望从她那里感受到一点点爱情的温度",
-            "而她连衣服也没脱，只是把裤子往下一褪，不耐烦地说，大哥赶紧着，赶时间",
-            "你想想这价格也就别要求太多了，于是也就顺其自然地努力了起来",
-            "经过一阵子的努力，当那一刻来临的时候，你感觉浑身舒适，仿佛终于找到了属于男性的力量",
-            "你回头看了看身边背对着你的失足少女，点了一根烟，然后拍了她的背影",
-            "你甚至有一种迷幻的感觉，想要和她在一起，你赶紧甩了甩头，打消了这种想法",
-            "你把照片发到戒赌吧，配上几句“今天这车怎么样”之类的话，然后刷了刷网友回帖",
-            "随后翻过身睡着了"
+            "あなたは彼女からほんの少しの愛を感じることを望みながら、静かに彼女を見ます。",
+            "そして彼女は自分の服を脱ぐことさえせず、ただズボンを摘んであなたをイライラさせた。",
+            "あなたが価格について考えるならば、あなたは何も言いません。",
+            "その瞬間が来ると、あなたはついに人の力を見つけたかのように心地よく感じます。",
+            "あなたはサイケデリックな気持ちさえ持っていて、彼女と一緒にいたい、あなたはすぐにこの考えを却下した",
+            "それから眠りに落ちた"
         ]
         yield* multi_message(messages)
         player_status["HP"] +=50
@@ -49,16 +48,16 @@ function* walk_on_street(){
     var exit = false
     while(exit!=true){
         player_status["Message"] = [
-            "你开始在深圳三和的街上晃荡，人来人往，没有任何人注意到你的存在",
+            "あなたは深センの三和の街を歩き始めました。",
         ]
         player_status["HP"] -= 2
         var p = Math.random()
     
         
         if(p<0.3){
-            player_status["Message"].push("你发现了一堆空瓶子！这可是能够卖一块钱的！")
+            player_status["Message"].push("あなたは空の瓶の束を見つけました！ これはドルを売ることができます！")
             player_status["Money"] += 1
-            player_status["Selections"]=["继续晃悠","干点别的"]
+            player_status["Selections"]=["続ける","何か他のことをする"]
             var player_selection = yield
             if(player_selection==0){
                 continue
@@ -66,8 +65,8 @@ function* walk_on_street(){
                 return false
             }
         }else if (p<0.5){
-            player_status["Message"].push("你看到了一家卷帘门半开着的洗头房，你要进去修车吗？")
-            player_status["Selections"]=["修车","算了"]
+            player_status["Message"].push("あなたは転がり戸が半分開いている無料案内所を見ました。")
+            player_status["Selections"]=["入る","いいえ"]
             var player_selection = yield
             if(player_selection==0){
                 //修车
@@ -76,15 +75,15 @@ function* walk_on_street(){
                 continue
             }
         }else if(p<0.8){
-            player_status["Message"].push("你看到了一家面馆，里面正在卖2块钱的大水和4块钱的挂逼面")
-            player_status["Selections"]=["吃面加喝大水","算了"]
+            player_status["Message"].push("ラーメン屋さんを見ました。 2ドルの水と4ドルのラーメンを売る。")
+            player_status["Selections"]=["ラーメンを食べる","いいえ"]
             var player_selection = yield
             if(player_selection==0){
                 player_status["Message"] = [
-                    "你点了一份挂逼面，呼哧呼哧地吃起来",
-                    "差点呛到，你又喝了一口大水"
+                    "あなたはラーメンを注文しました。",
+                    "もう一杯の水を飲む。"
                 ]
-                player_status["Selections"]=["继续"]
+                player_status["Selections"]=["続ける"]
                 player_status["HP"] += 6
                 player_status["Money"] -= 6
                 yield
@@ -97,20 +96,21 @@ function* walk_on_street(){
     
 }
 function* do_one_day_job(){
+    player_status["Special"] = '<img src="statics/work.jpg">';
     var messages= [
-        "你来到了著名的三和人力资源市场，眼前挤满了熙熙攘攘的人群，汗臭味，脚臭味，叫卖东西的声音，骂人的声音汇聚成一团",
-        "你努力向前方挤过去，试图找到一个好一点的日结"
+        "あなたは、にぎやかな群衆、汗臭い、足の臭い、物を売る音があふれた、有名な三和人力市场にやって来ました。",
+        "あなたは前進し、より良い仕事を見つけようとします。"
     ]
     yield* multi_message(messages)
     p = Math.random()
     //if (p < 0.2)
     {
         player_status["Message"] = [
-            "有人询问你，愿不愿意去电子厂做日结"
+            "「あなたは電子機器工場に行きたいですか？」"
         ]
         player_status["Selections"]=[
-            "啥日结都成，做",
-            "决不当厂狗，算了"
+            "はい",
+            "いいえ"
         ]
         var player_selection = yield
         if (player_selection==1){
@@ -119,15 +119,15 @@ function* do_one_day_job(){
         //焊电路板小游戏
         var work_number = getRandomInt(10,25)
         player_status["Message"] = [
-            "等你回过神来，你已经站在了一个生产线前面",
-            "你的任务就是焊流水线上传过来的电路板，非常无聊",
-            "周围的老哥们都面无表情,只有一个老哥正在高谈阔论关于中日钓鱼岛问题的伟大构想"
+            "あなたは生産ラインの前に立っています。",
+            "あなたの仕事は、ボードの上にアップロードされたパイプラインを溶接に非常に退屈です。",
+            "周りの同僚は無表情で、そして中国と日本の間の紛争について話している同僚は1人だけです。"
         ]
         while(work_number>0){
             work_number -= 1
             player_status["Selections"]=[
-                "你的面前堆着"+work_number+"块电路板，你拿起焊枪",
-                "摸鱼，和其他老哥吹牛逼搭话"
+                "あなたの目の前には"+work_number+"枚のボードがあります。働き始めます。",
+                "あなたは怠惰になり始めています。 他の労働者とチャットします。"
             ]
             var player_selection = yield
             if (player_selection == 0){
@@ -136,27 +136,27 @@ function* do_one_day_job(){
             }else if(player_selection == 1){
                 if (Math.random()<0.3){
                     player_status["Message"] = [
-                        "你的主管转头看到你在摸鱼，对你破口大骂，然后让你赶紧滚蛋不要来了",
+                        "あなたの上司は振り向いて、あなたが怠惰であなたに向かって怒鳴っているのを見ました。 それから彼はあなたがすぐに離れることができます。",
                     ]
                     player_status["selection"] = [
-                        "灰溜溜地离开"
+                        "あなたはとても不幸です。 しかしまだ行った。"
                     ]
                     var player_selection = yield
                     return
                 }else{
                     player_status["Message"] = [
-                        "你开始有一句没一句地和老哥吹牛逼，主管看了看你们，也没有说什么",
+                        "あなたは言葉なしで同僚とチャットを始めます。 監督はあなたを見て何も言わなかった。",
                     ]
                 }
             }
         }
         var money = 150 + getRandomInt(-30,30)
         player_status["Message"] = [
-            "总算是收工了，坐在大巴车上，你感觉全身都累瘫了",
-            "窗外的灯光不断闪过，你意识到你已经从电子厂回到了三和",
-            "你下车的时候，从门口的人那儿接过了你的"+money+"块工资"
+            "ついに仕事は終わりました。 バスに座っていると、体のいたるところに疲れているように感じます。",
+            "窓の外のライトが点滅している、そしてあなたはあなたが電子機器工場から三和に戻ったことを理解する。",
+            "あなたがバスを降りたとき、あなたは上司からあなたの"+money+"元の給料を受け取りました。"
         ]
-        player_status["Selections"]=["继续"]
+        player_status["Selections"]=["続ける"]
         player_status["Money"]+= money
         yield
         return
@@ -165,34 +165,34 @@ function* do_one_day_job(){
 }
 function* pay_or_get_debt(){
     player_status["Message"] = [
-        "你打开了熟悉的小贷APP文件夹",
-        "每个APP的右上角都显示着一大堆的未读消息，不用看，肯定是催款的"
+        "おなじみの借りたお金のアプリフォルダを開きました。",
+        "各アプリの右上隅には、未読のメッセージがたくさんあります。"
     ]
     player_status["Selections"]=[
-        "看看有没有新的口子",
-        "算了"      
+        "あなたがお金を借りることができるかどうかを確認します。",
+        "いいえ"      
     ]
 
     if(player_status["Money"]>100){
-        player_status["Selections"].push("还100块小贷")
+        player_status["Selections"].push("100ローンを返却します。")
     }
     if(player_status["Money"]>1000){
-        player_status["Selections"].push("还1000块小贷")
+        player_status["Selections"].push("1000ローンを返却します。")
     }
 
     var player_selection = yield
     if (player_selection==0){
         var p = Math.random()
         player_status["Message"] = [
-            "你输入了一个刚从别的老哥那你听说的APP名字"
+            "他の友達から聞いたばかりのAPP名を入力しました。"
         ]
         if(p<0.2){
             player_status["Message"].push(
-                "审核居然通过了！你要借一笔2000的小贷吗？"
+                "監査は実際に合格しました！ 2,000元を借りたいですか？"
             )
             player_status["Selections"]=[
-                "借！撸小贷就像发工资！",
-                "算了，以后要还的更多"
+                "はい！",
+                "いいえ"
             ]
             var player_selection = yield
             if (player_selection == 0){
@@ -203,9 +203,9 @@ function* pay_or_get_debt(){
             }
         }else{
             player_status["Message"].push(
-                "APP提示你的征信记录已经完全黑了，不会给你下款的"
+                "APPはあなたの信用履歴が完全に黒であることをあなたに思い出させます。 あなたにお金を貸しません。"
             )
-            player_status["Selections"] = ["继续"]
+            player_status["Selections"] = ["続ける"]
             yield
             return
         }
@@ -213,18 +213,18 @@ function* pay_or_get_debt(){
         return
     }else if(player_selection==2){
         player_status["Message"] = [
-            "你还上了100的贷款"
+            "あなたは100のお金を返しました。"
         ]
-        player_status["Selections"]=["继续"]
+        player_status["Selections"]=["続ける"]
         player_status["Money"] -= 100
         player_status["Debt"] -= 100
         yield
         return
     }else if(player_selection==3){
         player_status["Message"] = [
-            "你还上了1000的贷款"
+            "あなたは1000のお金を返しました。"
         ]
-        player_status["Selections"]=["继续"]
+        player_status["Selections"]=["続ける"]
         player_status["Money"] -= 1000
         player_status["Debt"] -= 1000
         yield
@@ -233,17 +233,17 @@ function* pay_or_get_debt(){
 }
 function* gambling(){
     player_status["Message"] = [
-        "你打开了熟悉的在线赌博平台",
-        "你可以开始以100为单位下注了"
+        "おなじみのオンラインギャンブルプラットフォームをオープンしました",
+        "100に賭けることができます"
     ]
     while(true)
     {
         player_status["Selections"]=[
-            "2倍赔率",
-            "5倍赔率",
-            "10倍赔率",
-            "50倍赔率",
-            "算了"
+            "2倍の確率",
+            "5倍の確率",
+            "10倍の確率",
+            "50倍の確率",
+            "ダメだ"
         ]
         var player_selection = yield
         switch (player_selection) {
@@ -251,12 +251,12 @@ function* gambling(){
                 if(Math.random()>0.4){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
-                        "很遗憾，你没有赢"
+                        "残念ながら、あなたは勝ちませんでした"
                     ]
                 }else{
                     player_status["Money"] += 200
                     player_status["Message"] = [
-                        "你赢了！"
+                        "あなたは勝ちました！"
                     ]
                 }
                 break;
@@ -264,12 +264,12 @@ function* gambling(){
                 if(Math.random()>0.15){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
-                        "很遗憾，你没有赢"
+                        "残念ながら、あなたは勝ちませんでした"
                     ]
                 }else{
                     player_status["Money"] += 500
                     player_status["Message"] = [
-                        "你赢了！"
+                        "あなたは勝ちました！"
                     ]
                 }
                 break;
@@ -277,12 +277,12 @@ function* gambling(){
                 if(Math.random()>0.05){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
-                        "很遗憾，你没有赢"
+                        "残念ながら、あなたは勝ちませんでした"
                     ]
                 }else{
                     player_status["Money"] += 1000
                     player_status["Message"] = [
-                        "你赢了！"
+                        "あなたは勝ちました！"
                     ]
                 }
                 break;
@@ -290,12 +290,12 @@ function* gambling(){
                 if(Math.random()>0.015){
                     player_status["Money"] -= 100
                     player_status["Message"] = [
-                        "很遗憾，你没有赢"
+                        "残念ながら、あなたは勝ちませんでした"
                     ]
                 }else{
                     player_status["Money"] += 5000
                     player_status["Message"] = [
-                        "你赢了！"
+                        "あなたは勝ちました！"
                     ]
                 }
                 break;
@@ -310,47 +310,47 @@ function* gambling(){
 }
 function* play_tieba(){
     player_status["Message"] = [
-        "你熟练地打开戒赌吧，登录了自己的账号",
-        "你把自己的支付宝账号贴了出去",
-        "然后开始拍照加卖惨，试图让吧友捐助自己一点钱"
+        "あなたは巧みに掲示板を開き、あなたのアカウントにログインします。",
+        "あなたはあなたのAlipayアカウントを投稿しました",
+        "それから写真を撮って売って、友達に少しのお金を寄付させようとします。"
     ]
     while(true){
         player_status["Selections"] = [
-            "怀念自己的父母",
-            "讲述自己是怎么开始赌博的",
-            "赌咒发誓自己再也不赌了",
-            "算了拉倒把"
+            "両親への愛を表現しましょう。",
+            "あなたがどのようにギャンブルを始めたかを自分自身に言いなさい。",
+            "二度とギャンブルをしないことを誓います。",
+            "忘れなさい"
         ]
         var player_selection = yield
         if (player_selection == 3){
             player_status["Message"] = [
-                "你从戒赌吧退了出来"
+                "あなたは掲示板から引退しました"
             ]
             return
         }else{
             var p = Math.random()
             if(p<0.1){
                 player_status["Message"] = [
-                    "有人直接举报了你的支付宝账号",
-                    "里面仅有的几块钱也没了"
+                    "あなたのAlipayアカウントが違法行為をしていると誰かが直接報告しました。",
+                    "その中にはわずか数ドルしかありません。"
                 ]
-                player_status["Selections"]=["继续"]
+                player_status["Selections"]=["続ける"]
                 yield
                 return
             }else if (p<0.8){
                 player_status["Message"] = [
-                    "没有几个人理你",
-                    "仅有的两个进来看帖的也对你冷嘲热讽"
+                    "あなたの世話をする気がある人はほとんどいません。",
+                    "記事を見るためにやって来た二人だけがあなたを笑わせています。"
                 ]
                 continue
             }else{
                 money = getRandomInt(2,5)
                 player_status["Message"] = [
-                    "随着你的手机一抖，居然有人真的给你打钱了",
-                    "你看着支付宝到账的"+money+"块钱笑开了花",
+                    "あなたの携帯電話が揺れると、誰かが実際にあなたにお金を渡します。",
+                    "あなたはアリペイの"+money+"ドルを見て笑った。",
                 ]
                 player_status["Money"] += money
-                player_status["Selections"] = ["赶紧收手，你把帖子删了"]
+                player_status["Selections"] = ["急いで閉じ、投稿を削除しました。"]
                 yield
                 return
             }
@@ -358,22 +358,23 @@ function* play_tieba(){
     }
 }
 function* go_to_netbar(){
+    player_status["Special"] = '<img src="statics/netbar.jpg">';
     player_status["Message"] = [
-        "你在街上四处寻找便宜的网吧",
-        "直到你发现了一个居民楼里的",
-        "你走了进去，烟味混合着汗臭味扑鼻而来",
-        "你走上二楼，楼上贴着歪歪扭扭的字“严禁看黄片”",
-        "你开了一台3块钱一小时的机子"
+        "あなたは路上で安いインターネットカフェを探しています。",
+        "あなたが居住用の建物の中にインターネットカフェを見つけるまでは。",
+        "あなたが中に入った、煙の臭いが汗とにおいを混ぜた。",
+        "あなたは2階まで歩いた、そして2階は「ポルノがない」という言葉でツイートされた。",
+        "あなたは1時間3元の費用がかかるPCを開けました。"
     ]
     while(true)
     {
         player_status["HP"]-=10
         player_status["Selections"] =[
-            "打一局撸啊撸",
-            "开一局网赌",
-            "去戒赌吧要饭",
-            "要一份红烧牛肉面",
-            "结账下机"
+            "PUBGのゲームをしなさい。",
+            "オンラインギャンブルでゲームをしましょう。",
+            "BBSは物乞いに行きます。",
+            "インスタントラーメンを買う。",
+            "チェックアウト"
         ]
         var player_selection = yield
         
@@ -381,11 +382,11 @@ function* go_to_netbar(){
             case 0:
                 if (Math.random()<0.5){
                     player_status["Message"] = [
-                        "你这局的队友坑的一批，让你气的直砸键盘。"
+                        "あなたのチームメイトは非常に弱いので、あなたは非常に怒っています。"
                     ]  
                 }else{
                     player_status["Message"] = [
-                        "你赢了！你禁不住打字嘲讽了一番对面的水平"
+                        "あなたは勝ちました！"
                     ]
                 }
                 break;
@@ -397,8 +398,8 @@ function* go_to_netbar(){
                 break;
             case 3:
                 player_status["Message"] = [
-                    "你点了一份3块钱的康师傅红烧牛肉面，",
-                    "吸溜吸溜吃完之后，打了个饱嗝"
+                    "あなたは3元のインスタントラーメンを注文しました。",
+                    "飲食の後、あなたはいっぱいでした。"
                 ]  
                 player_status["HP"] += 13
                 player_status["Money"] -= 3
@@ -414,68 +415,71 @@ function* go_to_netbar(){
 }
 function* sleep(){
     player_status["Message"] = [
-        "你看到了一家30块钱一晚的小旅馆",
-        "你也听老哥们说过，海信人力市场门口可是大酒店，大家都睡哪儿",
-        "又或者，也许桥洞下面没有那么冷？"
+        "あなたは一晩30元の小さなホテルを見ました。",
+        "また、“海信人力市场”は、みんなが眠る大きなホテルであることを友人から聞きました。",
+        "多分あなたは橋の穴の下で眠ることができますか？"
     ]
     player_status["Selections"] = [
-        "睡小旅馆",
-        "睡海信人力市场门口",
-        "睡桥洞"
+        "小さなホテルで寝ています。",
+        "“海信人力市场”で寝ています。",
+        "橋の穴で寝ています。"
     ]
     var player_selection = yield
     if(player_selection == 0){
+        player_status["Special"] = '<img src="statics/smallhotel.jpg">';
         player_status["Message"] = [
-            "你在大床上睡了一晚上",
-            "完全不顾及床单上的黄色斑点和烟头的痕迹",
-            "等你醒过来的时候，感觉身体舒服了不少"
+            "あなたは大きなベッドで一晩眠りました。",
+            "シートの汚れやタバコの跡を完全に無視しました。",
+            "あなたが目を覚ますと，ずっと快適になります。"
         ]
         player_status["HP"]+=30
         player_status["Money"] -= 30
-        player_status["Selections"] = ["继续"]
+        player_status["Selections"] = ["続ける"]
         yield
         return
     }else if(player_selection == 1){
+        player_status["Special"] = '<img src="statics/guabi.jpg">';
         player_status["Message"] = [
-            "海信人力市场门口躺满了老哥，你找了个空地睡下了",
+            "ハイセンスのマンパワー市場は人でいっぱいです、あなたは眠る場所を見つけました。",
         ]
-        player_status["Selections"] = ["继续"]
+        player_status["Selections"] = ["続ける"]
         yield
         if (Math.random()<0.5){
             player_status["Message"] = [
-                "等你醒过来的时候，你感觉腰都直不起来",
+                "あなたが目を覚ますと、あなたは非常に不快に感じます。",
             ]
-            player_status["Selections"] = ["继续"]
+            player_status["Selections"] = ["続ける"]
             player_status["HP"] -= 5
             yield
         }else{
             player_status["Message"] = [
-                "等你醒过来的时候，阳光洒在你的身上，你感觉恢复了一些体力",
+                "目を覚ますと、太陽があなたを照らします、そしていくらかの体力を回復したと感じます。",
             ]
-            player_status["Selections"] = ["继续"]
+            player_status["Selections"] = ["続ける"]
             player_status["HP"] += 15
             yield
         }        
         return        
     }else if(player_selection == 2){
+        player_status["Special"] = '<img src="statics/qiaodong.jpg">';
         var messages = [
-            "你寻找到了一个桥洞",
-            "然后在附近找到了一些编织袋",
-            "你把这些编织袋收拢起来，做成床垫，让自己暖和一些，然后就睡了下去"
+            "あなたは橋の穴を見つけました。",
+            "それから私は近くにいくつかのビニール袋を見つけました。",
+            "あなたはこれらのビニール袋をまとめて、マットレスを作り、自分自身を温めて、そして次に寝た。"
         ]
         multi_message(messages)
         if (Math.random()<0.3){
             player_status["Message"] = [
-                "等你醒过来的时候，你感觉自己有一点发烧",
+                "あなたが目を覚ますと、あなたが病気であるように感じます。",
             ]
-            player_status["Selections"] = ["继续"]
+            player_status["Selections"] = ["続ける"]
             player_status["HP"] -= 15
             yield
         }else{
             player_status["Message"] = [
-                "等你醒过来的时候，阳光洒在你的身上，你感觉恢复了一些体力",
+                "目を覚ますと、太陽があなたを照らします、そしていくらかの体力を回復したと感じます。",
             ]
-            player_status["Selections"] = ["继续"]
+            player_status["Selections"] = ["続ける"]
             player_status["HP"] += 10
             yield
         }        
@@ -484,43 +488,44 @@ function* sleep(){
 }
 function* game_logic(){
     player_status["Message"] = [
-        "欢迎游玩《三和浮尘录》，本游戏试图模拟一个三和大神的生活，从而展示另一个底层的世界",
-        "这并不代表作者赞同三和大神的想法，甚至是带有批判的意味来制作的本游戏但是，将三和大神看作一种奇特的生物来满足猎奇的心理，同样也是不妥的",
-        "为此，作者试图用一个游戏向玩家勾勒三和大神们所遇到的困境、痛苦和迷茫",
-        "并警示任何一个人，避免走上这样的道路",
-        "如今戒赌吧已经被封，这些人的故事如同浮尘一样，在三和的大街上飘散",
-        "作者希望能够稍微记录一下，这些人的故事"
+        "初めまして、これは《三和浮尘录》，このゲームは“三和大神”の生活をシミュレートしようとします，このように社会の底に人々の世界を見せる",
+        "その前に、NHKのドキュメンタリーを見ることをお勧めします.",
+        "私は深圳で働き、そのような群衆にさらされています。",
+        "だから私は彼らが遭遇するジレンマを示すためにこのゲームを使うことを望みます。",
+        "そして、自分の道をたどらないように他の人に警告することを望みます。",
+        "私はこのゲームを日本語に翻訳しました、そして日本の友人たちもそれを好むことを望みます。",
     ]
+    player_status["Special"] = '<iframe width="560" height="315" src="https://www.youtube.com/embed/YcidornQ7rU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
     player_status["Selections"] = [
-        "开始游戏"
+        "開始"
     ]
     var player_selection = yield;
     // start
     var start_message = [
-        "当你开始网赌的时候，你听过无数人说，“不赌为赢”，但是你还是想去刺激一下，试一试",
-        "当你输了这个月工资的时候，你一咬牙一跺脚，坚持要通过一把梭哈把整个月的工资赌回来",
-        "当你把积蓄全部输光的时候，你已经无法收场了，你打开了各种小贷APP，开始拆东墙补西墙，寄希望于一把翻盘",
-        "当你小贷APP的催收短信轰炸到你只能关闭手机的时候，你意识到，你和戒赌吧的老哥们就快要会和了",
-        "当高利贷敲你家房门，群发侮辱你的短信给你所有联系人的时候，你借钱买了一张来三和的车票",
-        "当你看到三和人才市场的大门，你终于意识到，你和那些你当笑话看的戒赌吧老哥，没有任何区别",
-        "当你下车的时候，身上除了一张身份证，只剩下5块钱"
+        "あなたが最初にオンラインギャンブルを試みるとき、他の人はあなたがそれをしないように忠告します。",
+        "今月の給料を失うとき、あなたはギャンブルを通してお金を取り戻したいです。",
+        "あなたがすべてのあなたの貯蓄を失うとき、あなたはどこでも借り始めます。",
+        "債権者があなたに返済を促し続けるとき、あなたはすでにあなたの結末を知っています。",
+        "債権者はすべてのあなたの友人や両親にリマインダーを送ります。 あなたは最後のお金で三和への切符を買った。",
+        "“三和人力市场”のドアの前に立つと、あなたは5元しか残っていません。",
     ]
 
     for(var i =0; i < start_message.length; i++)
     {
         player_status["Message"] = [start_message[i]]
-        player_status["Selections"] = ["继续"]
+        player_status["Selections"] = ["続ける"]
         player_selection = yield
     }
     var exit = false
     while(exit != true){
-        player_status["Message"] = ["你在街上张望着，决定接下来要去的地方"]
+        player_status["Special"] = '<img src="statics/head.jpg">';
+        player_status["Message"] = ["あなたは通りに立って見回しています。 次にどこへ行くかについて考えてください。"]
         player_status["Selections"]=[
-            "在街上转转",
-            "做日结",
-            "打开小贷APP",
-            "去网吧",
-            "找地方睡觉"
+            "通りを歩く",
+            "働く",
+            "お金を借りるためにAPPを使用する",
+            "インターネットカフェに行きます",
+            "寝る場所を探します"
         ]
         player_selection = yield
 
@@ -547,11 +552,11 @@ function* game_logic(){
 }
 function game_over(reason){
     if(reason == "HP"){
-        player_status["DialogMessage"] = "很遗憾，由于你的健康状况已经低到不可忍受，你也没有能力寻找到治疗。当人们发现你的时候，你已经在三和的街边凉透了。你的遗体被送回老家，但是没有任何亲戚愿意出面帮一个借钱不还的废物举办葬礼。最后你的老父亲出面，把你火化了，成为了你们家空空如也的房间里唯一的一样家具——你的骨灰盒"
+        player_status["DialogMessage"] = "残念ながら、あなたの健康状態は耐えられないには低すぎるので、あなたは治療法を見つけることができません。 人々があなたを見つけたとき、あなたはすでに三河の通りで涼しいです。 あなたの体はあなたの故郷に送り返されました、しかし、親戚はお金を借りた葬儀を手伝うために前に来ることを望んでいませんでした。 最後に、あなたのお父さんが出てきてあなたを火葬し、あなたの空き部屋で唯一の家具になった - あなたの棺"
         return;
     }
     if(reason == "Money"){
-        player_status["DialogMessage"] ="即使在三和，也需要一点点的流动资金才能够活下去。如今你真的走到了身无分文的境地，怎么说呢，你也许距离饿死也不太远了。放弃吧，当你兴致勃勃地梭哈的时候，就该想到这一天"
+        player_status["DialogMessage"] ="三和でさえ、生き残るためには少しお金がかかります。 あなたは本当に無力な立場にいるので、あなたは飢餓からそれほど遠くないかもしれません。"
         return;
     }
 }

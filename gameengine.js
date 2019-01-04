@@ -5,7 +5,8 @@ var player_status = {
     Debt : 50000,
     Selections : [],
     DialogMessage:"",
-    HeadImage : 'statics/head.jpg'
+    HeadImage : 'statics/head.jpg',
+    Special : ''
 }
 var engine_instance = null
 var app = new Vue({

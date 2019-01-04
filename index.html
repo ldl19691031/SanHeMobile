@@ -46,6 +46,9 @@
                 </div>
             </div>
             <section style="margin: 5%;">
+                    <div v-if = "HeadImage != ''">
+                        <img v-bind:src="HeadImage">
+                    </div>
                     <p v-for="M in Message">
                         {{ M }}
                     </p>
